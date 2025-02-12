@@ -22,7 +22,7 @@ public class LinkedList implements ILinkedList {
 		}
 		
 		// 두번째 이후의 경우
-		Node nd = new Node(index, null, this.next.next);
+		Node nd = new Node(index, null, this.head.next);
 		this.head.prev.next = nd;
 		this.head.next = nd;
 		
