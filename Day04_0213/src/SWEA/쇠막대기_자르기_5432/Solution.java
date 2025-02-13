@@ -44,7 +44,7 @@ public class Solution {
 			
 			// 테스트케이스가 끝나면 결과 출력
 			System.out.printf("#%d %d\n", test_case, sum);
-
+			
 		} // 테스트케이스 끝
         
 	} // main 끝
