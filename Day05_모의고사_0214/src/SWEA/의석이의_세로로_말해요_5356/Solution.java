@@ -22,11 +22,6 @@ public class Solution {
 					maxLength = arr[i].length;
 			}
 			
-//			// 잘 들어왔는지 찍어봄
-//			for (int i = 0; i < 5; i++) {
-//				System.out.println(Arrays.toString(arr[i]));
-//			}
-			
 			// 길이가 작은 문자는 재편해준다.
 			for (int i = 0; i < 5; i++) {
 				// 만약 2차원배열의 길이가 최대 길이보다 작은 배열이면
@@ -49,12 +44,6 @@ public class Solution {
 				}
 			}
 			
-//			System.out.println();
-//			// 잘 들어왔는지 찍어봄
-//			for (int i = 0; i < 5; i++) {
-//				System.out.println(Arrays.toString(arr[i]));
-//			}
-			
 			// 2차원 배열의 최대 길이만큼 반복을 돌아주면서
 			for (int j = 0; j < maxLength; j++) {
 				for (int i = 0; i < 5; i++) {
@@ -64,7 +53,6 @@ public class Solution {
 			
 			// 정답 출력
 			System.out.printf("#%d %s\n", test_case, sb);
-//			System.out.println();
 			
 		} // 테스트케이스 끝
 		
