@@ -67,12 +67,51 @@ public class Solution {
 						op.push(calc.charAt(i));
 					}
 				}
-			} // 중위표기를 하나씩 읽어서 처리
-			// 중위표기로 변환된 내용 출력해본다
-			System.out.printf("중위표기 : %s\n");
+			}
+			
+			// 마지막까지 남아있는 연산자를 체크한다.
+			while (!op.isEmpty()) {
+				postfix.append(op.pop());
+			}
+			
+			// 숫자들도 스택으로 담아주기 위해 스택 선언
+			Stack<Integer> nums = new Stack<>();
+			
+			// 후위표기식을 선회하면서
+			for (int i = 0; i < postfix.length(); i++) {
+				if (Character.isDigit(postfix.charAt(i))) { // 피연산자가 숫자이면 스택에 담아준다
+					nums.push(postfix.charAt(i) - '0');
+					// 만약 연산자이면
+				} else {
+					int num2 = nums.pop(); // 두번째 숫자와 첫번째 숫자를 순서대로 꺼내서
+					int num1 = nums.pop();
+					int tempSum = calculate(num1, num2, postfix.charAt(i)); // 별도로 만들어놓은 계산 함수에 넣는다.
+                    nums.push(tempSum);
+				}
+			}
+			
+			// 최종적으로 남은 숫자를 꺼내서 답으로 출력한다.
+			int answer = nums.pop();
+			System.out.printf("#%d %d\n", test_case, answer);
 
 		} // 테스트케이스 끝
-        
+		sc.close();
 	} //main 끝
+	
+	// 연산자를 만났을 때 해당 자리에 있는 연산자를 switch문으로 비교해서 두 숫자를 계산해준다
+    static int calculate(int num1, int num2, char op) {
+        switch (op) {
+            case '+':
+                return num1 + num2;
+            case '-':
+                return num1 - num2;
+            case '*':
+                return num1 * num2;
+            case '/':
+                return num1 / num2;
+            default:
+                return 0; // 잘못된 연산자
+        }
+    }
     
 } // 클래스 끝
