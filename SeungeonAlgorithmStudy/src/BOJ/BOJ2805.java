@@ -15,45 +15,58 @@ public class BOJ2805 {
 		
 		int N = Integer.parseInt(st.nextToken()); // 나무의 수
 		int M = Integer.parseInt(st.nextToken()); // 가져가려는 나무의 길이
-		int[] arr = Stream.of(br.readLine().split(" "))
+		int[] arr = Stream.of(br.readLine().split(" ")) // 배열을 입력받아준다
 						  .mapToInt(Integer::parseInt)
 						  .toArray();
+		// 이분탐색을 위해 배열을 정렬해준다
+		Arrays.sort(arr);
 		
-		int maxHeight = Arrays.stream(arr).max().orElse(0); // 톱니 높이의 후보로 최대값을 선정해준다
-		
-		int low = 0; // 시작 인덱스
-		int high = maxHeight; // 끝 인덱스
-		int mid = (low + high)/2; // 중간값 변수
+		int left = 0; // 0번인덱스에서부터 시작할 것임
+		int right = N-1; // 마지막 인덱스에서부터 시작할 것임
+		int cnt = 0; // 목표값을 구하기 위해 필요한 변수
+		int subTotal = 0;
 		int ans = 0;
 		
-		// 두 길이가 교차할 때 까지 반복하면서
-		while (low >= high) {
-			int subTotal = 0; // 절단된 합계를 구하는 변수
-			
-			// 지속적으로 탐색해준다
-			for (int i = 0; i < N; i++) {
-				if (arr[i] > mid) {
-					subTotal += arr[i]-mid;
-				}
+		int mid = arr[arr.length/2]; // 중간값
+		
+		System.out.println(Arrays.toString(arr));
+		System.out.println(mid);
+		
+		// 좌우측이 교차할 때까지 돌면서
+		while (left <= right) {
+			// 좌측의 값에 대한 비교 시작
+			if (arr[left] > mid) {
+				subTotal += arr[left]-mid;
+				left++;
+				cnt++;
+			} else {
+				left++;
 			}
 			
-			// 중간 합계가 M보다 크다면
+			// 우측의 값에 대한 비교 시작
+			if (arr[right] > mid) {
+				subTotal += arr[right]-mid;
+				right--;
+				cnt++;
+			} else {
+				right--;
+			}
+			
+			// 돌던 중 만약 중간합계값이 목표보다 크면
 			if (subTotal > M) {
-				low = mid; // 낮은 구간을 mid로 올려주고
-				mid = (low + high)/2; // mid를 또 올려줍니다
-				high = maxHeight;
-				// 중간 합계가 M보다 작다면
+				mid -= subTotal/cnt;
+				// 중간합계값이 목표보다 작으면
 			} else if (subTotal < M) {
-				low = 0;
-				high = mid;
-				mid = (low + high)/2;
+				mid += subTotal/cnt;
+				// 같으면 
 			} else if (subTotal == M) {
-				ans = subTotal;
+				ans = mid;
+				break;
 			}
+			
 		}
 		
 		System.out.println(ans);
-		
 		
 	} // main 끝
 	

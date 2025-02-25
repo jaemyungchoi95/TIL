@@ -13,36 +13,53 @@ public class tue_boj_14719_빗물 {
 		
 		int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 		
-		System.out.println(Arrays.toString(arr));
+//		System.out.println(Arrays.toString(arr));
+		
+		boolean isAboveZero = true;
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == 0) {
+				isAboveZero = false;
+			}
+		}
+		
+		if (isAboveZero) {
+			for (int i = 0; i < arr.length; i++) {
+				arr[i]--;
+			}
+		}
+		
+//		System.out.println(Arrays.toString(arr));
 		
 		int n = H;
 		int m = W;
 		
-		int idx = 0;
-		int cnt = 0;
 		int sum = 0;
 		
 		for (int i = n; i > 0; i--) {
-			System.out.printf("i : %d\n", i);
+			int cnt = 0;
+			int subTotal = 0;
+//			System.out.printf("i : %d\n", i);
 			for (int j = 0; j < m; j++) {
-				if (arr[j] == i) {
+				if (arr[j] >= i) {
 					cnt++;
 				}
 				
 				if (cnt == 1) {
-					idx = j;
+					subTotal++;
 				}
 				
 				if (cnt == 2) {
-					sum += j - idx - 1;
-					idx = j;
+					sum += subTotal -1;
 					cnt = 0;
 				}
 				// 위에서부터 내려오면서
-				System.out.printf("j : %d\n", j);
-				System.out.printf("cnt : %d\n", cnt);
-				System.out.printf("sum : %d\n", sum);
+//				System.out.printf("j : %d\n", j);
+//				System.out.printf("arr[j] : %d\n", arr[j]);
+//				System.out.printf("cnt : %d\n", cnt);
+//				System.out.printf("subTotal : %d\n", subTotal);
+//				System.out.printf("sum : %d\n", sum);
 			}
 		}
+		System.out.println(sum);
 	}
 }
