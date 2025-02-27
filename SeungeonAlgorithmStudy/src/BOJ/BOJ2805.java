@@ -21,52 +21,42 @@ public class BOJ2805 {
 		// 이분탐색을 위해 배열을 정렬해준다
 		Arrays.sort(arr);
 		
-		int left = 0; // 0번인덱스에서부터 시작할 것임
-		int right = N-1; // 마지막 인덱스에서부터 시작할 것임
-		int cnt = 0; // 목표값을 구하기 위해 필요한 변수
-		int subTotal = 0;
-		int ans = 0;
+		int str = 0; // 탐색을 시작할 값
+		int end = arr[N-1]; // 탐색의 끝 값
 		
-		int mid = arr[arr.length/2]; // 중간값
-		
-		System.out.println(Arrays.toString(arr));
-		System.out.println(mid);
+//		System.out.println(Arrays.toString(arr));
 		
 		// 좌우측이 교차할 때까지 돌면서
-		while (left <= right) {
-			// 좌측의 값에 대한 비교 시작
-			if (arr[left] > mid) {
-				subTotal += arr[left]-mid;
-				left++;
-				cnt++;
-			} else {
-				left++;
-			}
+		while (str <= end) {
+			int cnt = 0; // 획득할 수 있는 나무의 수
+			int mid = (str+end)/2; // 중간값은 조정된 시작값과 끝값을 바탕으로 업데이트
+//			System.out.println("mid : " + mid);
 			
-			// 우측의 값에 대한 비교 시작
-			if (arr[right] > mid) {
-				subTotal += arr[right]-mid;
-				right--;
-				cnt++;
-			} else {
-				right--;
+			// 배열을 순회하면서
+			for (int i = 0; i < arr.length; i++) {
+				// 해당위치의 값이 중간값보다 클 경우에만
+				if (mid < arr[i]) {
+					// 나무길이 - 중간값을 뺀 값을 cnt에 더해준다
+					cnt += arr[i]-mid;
+				}
 			}
+//			System.out.println("cnt : " + cnt);
 			
-			// 돌던 중 만약 중간합계값이 목표보다 크면
-			if (subTotal > M) {
-				mid -= subTotal/cnt;
-				// 중간합계값이 목표보다 작으면
-			} else if (subTotal < M) {
-				mid += subTotal/cnt;
-				// 같으면 
-			} else if (subTotal == M) {
-				ans = mid;
-				break;
+			// 만약 cnt가 필요한 나무의 수보다 적을 경우
+			if (cnt < M) {
+				end = mid -1; // 끝값을 mid -1로 조정해주고
+			} else {
+				str = mid +1; // 반대의 경우 시작값을 mid +1로 조정해준다
 			}
+			System.out.println("str : "+str);
+			System.out.println("end : "+end);
 			
 		}
 		
-		System.out.println(ans);
+//		System.out.println("end : " + end);
+		
+		// 정답 출력
+		System.out.println(end);
 		
 	} // main 끝
 	
